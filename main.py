@@ -1,6 +1,7 @@
 import argparse
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 def parse_arguments():
@@ -24,17 +25,20 @@ def data_prep(path, number_repos):
     return repo_data.head(number_repos)
 
 def generate_graph(data):
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(tight_layout=True)
 
     ind = 0.2  # the x locations for the groups
     width = 0.1  # the width of the bars
 
     for i in range(len(data)):
-        rects1 = ax.bar(ind*i - width/len(data), int(data["star"].iloc[i]), width)
+        rects1 = ax.bar(ind*i - width/len(data), int(data["star"].iloc[i]), width, color="blue")
 
     ax.set_xlabel('repositories')
     ax.set_title('Top 2020 github repositories according to the dataset')
+    ax.set_xticks(np.arange(10)/5)
     ax.set_xticklabels(data["name"].to_list())
+
+    ax.grid()
 
     plt.show()
 
